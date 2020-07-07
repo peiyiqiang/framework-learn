@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="accountService" class="org.example.service.impl.AccountServiceImpl"></bean>
+
+    <bean id="logger" class="org.example.util.Logger"></bean>
+
+    <aop:config>
+        <aop:pointcut id="pc" expression="execution(* org.example.service.impl.*.*(..))"/>
+        <aop:aspect id="logAdvice" ref="logger">
+            <aop:before method="before" pointcut-ref="pc"></aop:before>
+            <aop:after-returning method="afterReturning" pointcut-ref="pc"></aop:after-returning>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pc"></aop:after-throwing>
+            <aop:after method="after" pointcut-ref="pc"></aop:after>
+<!--            <aop:around method="around" pointcut-ref="pc"></aop:around>-->
+        </aop:aspect>
+    </aop:config>
+
+
+</beans>
